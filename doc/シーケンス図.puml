@@ -1,0 +1,22 @@
+@startuml  シーケンス図
+participant "User" as U
+participant "WebUI" as W
+participant "TaskService" as TS
+participant "AIService" as AIS
+database "DB" as DB
+
+U -> W: タスク情報入力
+W -> TS: createTask(task)
+TS -> DB: INSERT Task
+DB --> TS: TaskIdを返す
+
+U -> W: "AIでサブタスクを生成"をクリック
+W -> TS: generateSubTasks(taskId)
+TS -> AIS: requestSubTaskSuggestions(taskDescription)
+AIS --> TS: サブタスク候補のリスト
+TS -> DB: INSERT SubTask(複数)
+DB --> TS: 正常登録OK
+TS --> W: サブタスク一覧を返す
+
+W -> U: サブタスク候補を表示
+@enduml

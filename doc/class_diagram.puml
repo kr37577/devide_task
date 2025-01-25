@@ -1,0 +1,63 @@
+@startuml class_diagram
+
+' パッケージや名前空間を表現したい場合は包むことも可能
+package "Domain Model" {
+    class User {
+        - userId : int
+        - userName : string
+        - email : string
+        --
+        + register()
+        + login()
+        + updateProfile()
+    }
+
+    class Task {
+        - taskId : int
+        - title : string
+        - description : string
+        - createdDate : Date
+        - userId : int
+        --
+        + createTask()
+        + editTask()
+    }
+
+    class SubTask {
+        - subTaskId : int
+        - title : string
+        - status : string  <<未着手, 進行中, 完了>>
+        - dueDate : Date
+        - taskId : int
+        --
+        + createSubTask()
+        + updateStatus()
+    }
+}
+
+package "Service" {
+    class TaskService {
+        + getTasksByUser(userId : int)
+        + createTask(task : Task)
+        + generateSubTasks(taskId : int)
+        + updateTask(task : Task)
+    }
+
+    class AIService {
+        + requestSubTaskSuggestions(taskDescription : string) : List<SubTask>
+    }
+
+    class NotificationService {
+        + sendNotification(user : User, message : string)
+        + scheduleReminder(subTask : SubTask)
+    }
+}
+
+User "1" -- "0..*" Task : has >
+Task "1" -- "0..*" SubTask : has >
+TaskService ..> Task
+TaskService ..> SubTask
+TaskService ..> AIService : use
+NotificationService ..> SubTask
+NotificationService ..> User
+@enduml
