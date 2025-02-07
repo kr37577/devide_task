@@ -16,9 +16,9 @@ jobs:
       - name: Build Docker image
         run: docker build -t devide_task .
 
-      - name: Run Python lint/format/tests in Docker container
+      - name: Run Python lint/format tests in Docker container
         run: |
-          docker run --rm devide_task bash -c "flake8 . && black --check . && python -c \"print('Hello World')\""
+          docker run --rm devide_task sh -c "flake8 . && black --check ."
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -26,7 +26,6 @@ jobs:
           node-version: "16"
       - name: Install Node.js dependencies
         run: npm install
-      - name: Run Node.js lint and test
+      - name: Run Node.js lint test
         run: |
           npx eslint . || echo "ESLint check skipped if no config"
-          node -e "console.log('Hello World')"
