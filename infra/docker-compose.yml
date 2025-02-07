@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  backend:
+    container_name: devide_task-backend
+    build:
+      context: ../backend
+    ports:
+      - "3000:3000"
+    networks:
+      - dev_network
+  frontend:
+    container_name: devide_task-frontend
+    build:
+      context: ../frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - dev_network
+networks:
+  dev_network:
+    driver: bridge

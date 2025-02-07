@@ -1,0 +1,16 @@
+# Docker 開発/本番運用構成
+- backend/Dockerfile: バックエンド用Dockerfile  
+- frontend/Dockerfile: フロントエンド用Dockerfile  
+- infra/docker-compose.yml: コンテナの命名・ネットワーク設定含むdocker-composeファイル  
+
+## ディレクトリレイアウト
+```
+/Users/riku-ka/mywork/docker/devide_task  
+├── backend  
+├── frontend  
+└── infra  
+```
+
+## コンテナ命名規則・ネットワーク設定
+- 各サービスは「devide_task-サービス名」でコンテナ名を設定  
+- 共通のbridgeネットワーク(dev_network)を利用

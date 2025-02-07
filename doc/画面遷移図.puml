@@ -1,0 +1,30 @@
+@startuml  画面遷移図
+skinparam actorStyle awesome
+skinparam wrapWidth 200
+
+title タスク細分化アプリ 画面遷移図
+
+rectangle "ログイン画面" as Login
+rectangle "ユーザー登録画面" as Register
+rectangle "ダッシュボード画面" as Dashboard
+rectangle "タスク作成画面" as CreateTask
+rectangle "タスク詳細画面" as TaskDetail
+rectangle "サブタスク生成画面\n(AI連携)" as SubTaskGen
+rectangle "サブタスク編集画面" as SubTaskEdit
+rectangle "通知設定画面" as NotificationSetting
+
+Login --> Register : 「新規登録はこちら」リンク
+Login --> Dashboard : ログイン成功
+Register --> Login : 登録成功 → ログイン画面へ戻る
+
+Dashboard --> CreateTask : 「新規タスク作成」ボタン
+Dashboard --> TaskDetail : 「タスクを選択」(タスク一覧から選択)
+Dashboard --> NotificationSetting : 「通知設定」メニュー選択
+
+TaskDetail --> SubTaskGen : 「AIでサブタスク生成」ボタン
+TaskDetail --> SubTaskEdit : 「サブタスク一覧」から編集ボタン
+
+SubTaskGen --> TaskDetail : 生成後「戻る」または「完了」ボタン
+SubTaskEdit --> TaskDetail : 編集保存後、詳細画面へ戻る
+
+@enduml
